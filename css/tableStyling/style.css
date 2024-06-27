@@ -1,0 +1,34 @@
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: solid 1px #999;
+}
+
+tfoot {
+  border-top: 1px solid #999;
+}
+
+thead th {
+  padding: 0.3em;
+}
+
+thead :nth-child(2),
+tbody :nth-child(2),
+thead :nth-child(3),
+tbody :nth-child(3),
+tfoot :nth-child(1) {
+  text-align: right;
+}
+
+thead :nth-child(1),
+tbody :nth-child(1),
+thead :nth-child(4),
+tbody :nth-child(4),
+tfoot :nth-child(2) {
+  text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #eee;
+}
