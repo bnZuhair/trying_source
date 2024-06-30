@@ -1,0 +1,43 @@
+html {
+  font-family: sans-serif;
+}
+
+/* manually */
+/* .box { */
+/*   box-sizing: border-box; */
+/*   width: 250px; */
+/*   height: 200px; */
+/* padding: 90px 50px; */
+/* text-align: center; */
+/* margin: 50em; */
+/* } */
+
+/* this is a better way to do it */
+.box {
+  /* alaing the box in the center */
+  position: absolute;
+  width: 250px;
+  height: 200px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* align the text in the center */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* using */
+
+/* styling the box*/
+body .box {
+  color: white;
+  text-shadow: black 1px 1px;
+  background-color: #46adad;
+  font-size: 1.125rem;
+  border-radius: 2px;
+  border: 2px solid #1b8585;
+  box-shadow:
+    inset 2px 2px 4px rgb(255 255 255 / 0.6),
+    3px 3px 6px rgb(0 0 0 / 0.8);
+}
