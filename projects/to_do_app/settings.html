@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>tasks</title>
+      <link href="style.css" rel="stylesheet">
+      <!-- <script src="main.js" onload="applyFontSize(); "> -->
+      <script src="main.js" >
+      </script>
+      <script>
+         function setSlider() {
+            document.getElementById("fontSize").value = parseFloat(document.documentElement.style.fontSize);
+            // a better soltion
+            // document.getElementById("fontSize").value = parseFloat(window
+            //    .getComputedStyle(document.documentElement).getPropertyValue("font-size"));
+         }
+         window.addEventListener('load', function() {
+           applyFontSize();
+          setSlider();
+         });
+      </script>
+   </head>
+   <body>
+      <header>
+         <nav>
+            <ul>
+               <li><a href="index.html">Home</a></li>
+               <li><a href="settings.html">Settings</a></li>
+               <li><a href="about.html">About</a></li>
+            </ul>
+         </nav>
+      </header>
+      <main>
+         <h1>Settings</h1>
+         <h2>Font size</h2>
+         <input type="range" min="10" max="50" step="0.5" id="fontSize"
+            oninput="setFontSize(this.value)"><br>
+         <button type="rest" onclick="setFontSize(20)">rest to defaluts</button>
+      </main>
+   </body>
+</html>
