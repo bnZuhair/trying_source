@@ -1,3 +1,4 @@
+let taskId = parseInt(localStorage.getItem("taskId")) || 0;
 function setFontSize(fontSize) {
    localStorage.setItem("fontSize", fontSize);
    applyFontSize();
@@ -12,6 +13,10 @@ function applyFontSize() {
    );
 }
 
-function setSlider() {
-   return document.documentElement.style.fontSize;
+function addTask(task) {
+   const tasks = JSON.parse(localStorage.getItem("pendingTasks")) || [];
+   tasks.push({ id: taskId, content: task });
+   taskId++;
+   localStorage.setItem("taskId", taskId);
+   localStorage.setItem("pendingTasks", JSON.stringify(tasks));
 }

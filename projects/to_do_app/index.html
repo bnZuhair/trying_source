@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>tasks</title>
+      <link href="style.css" rel="stylesheet">
+      <script src="main.js" onload="applyFontSize()">
+      </script>
+   </head>
+   <body>
+      <header>
+         <nav>
+            <ul>
+               <li><a href="index.html">Home</a></li>
+               <li><a href="settings.html">Settings</a></li>
+               <li><a href="about.html">About</a></li>
+            </ul>
+         </nav>
+      </header>
+      <main>
+         <div id="inputBox">
+            <input type="text" id="taskInput" placeholder="type your task">
+            <button id="addButton">Add</button><br>
+            <script>
+               const taskInput = document.getElementById('taskInput');
+               const addButton = document.getElementById('addButton');
+               addButton.addEventListener('click', () => {
+                   const value = taskInput.value;
+                  if(value){
+                     addTask(value); 
+                     taskInput.value = '';
+                     showTasks(); 
+                  }
+               });
+            </script>
+         </div>
+         <div class="tasks-section">
+            <div class="tasks-list">
+               
+            </div>
+         </div>
+      </main>
+   </body>
+</html>
