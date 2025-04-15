@@ -8,7 +8,7 @@ function applyFontSize() {
       "style",
       `font-size:${
          localStorage.getItem("fontSize") ||
-         setFontSize(16)
+         setFontSize(20)
       }px`,
    );
 }
