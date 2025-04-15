@@ -82,4 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
       updateTaskState(label.getAttribute("for"), checkbox.checked); // send the id of the task
    });
 });
+function updateTaskState(id, iscompleted) {
+   const tasks = iscompleted
+      ? getLocalTasks("pendingTasks")
+      : getLocalTasks("compTasks");
+   const taskIndex = tasks.findIndex((task) => task.id == id);
+   addTaskto(tasks[taskIndex], iscompleted ? "compTasks" : "pendingTasks");
+   tasks.splice(taskIndex, 1);
+   setLocalTasks(iscompleted ? "pendingTasks" : "compTasks", tasks);
+   showTasks();
 }
+
