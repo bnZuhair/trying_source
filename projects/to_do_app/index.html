@@ -5,7 +5,12 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>tasks</title>
       <link href="style.css" rel="stylesheet">
-      <script src="main.js" onload="applyFontSize()">
+      <script src="main.js" onload="applyFontSize();">
+      </script>
+      <script>
+         window.addEventListener("load", (event) => {
+            showTasks();
+         });
       </script>
    </head>
    <body>
