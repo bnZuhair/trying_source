@@ -19,7 +19,59 @@ function addTask(task) {
    taskId++;
    localStorage.setItem("taskId", taskId);
    localStorage.setItem("pendingTasks", JSON.stringify(tasks));
+function showTasks(filter = "all") {
+   clearTasks();
+   if (filter == "all") {
+      showPendingTasks();
+      showCompTasks();
+   } else if (filter == "pending") {
+      showPendingTasks();
+   } else {
+      showCompTasks();
+   }
+}
+function printTasks(tasks, iscompleted = false) {
+   tasks.reverse().map((task) => {
+      const list = document.getElementById("tasks-list");
+      const div = document.createElement("div");
+      const item = document.createElement("input");
+      const label = document.createElement("label");
+
+      div.setAttribute("class", "task");
+
+      item.setAttribute("type", "checkbox");
+      item.setAttribute("id", task.id);
+
+      label.textContent = task.content;
+      label.setAttribute("for", task.id);
+
+      if (iscompleted) {
+         item.checked = true;
          label.classList.add("strikethrough");
+      }
+
+      div.appendChild(item);
+      div.appendChild(label);
+      list.appendChild(div);
+   });
+}
+function showPendingTasks() {
+   const tasks = getLocalTasks("pendingTasks");
+   printTasks(tasks);
+}
+function showCompTasks() {
+   const tasks = getLocalTasks("compTasks");
+   printTasks(tasks, iscompleted = true);
+}
+function clearTasks() {
+   const list = document.getElementById("tasks-list");
+   list.replaceChildren();
+}
+function removeTasks() {
+   localStorage.removeItem("pendingTasks");
+   localStorage.removeItem("compTasks");
+   clearTasks();
+}
 document.addEventListener("DOMContentLoaded", () => {
    document.getElementById("tasks-list").addEventListener("change", (e) => {
       const checkbox = e.target;
