@@ -13,12 +13,18 @@ function applyFontSize() {
    );
 }
 
-function addTask(task) {
-   const tasks = JSON.parse(localStorage.getItem("pendingTasks")) || [];
+function addnewTask(task, target = "pendingTasks") {
+   const tasks = getLocalTasks(target);
    tasks.push({ id: taskId, content: task });
    taskId++;
    localStorage.setItem("taskId", taskId);
-   localStorage.setItem("pendingTasks", JSON.stringify(tasks));
+   setLocalTasks(target, tasks);
+}
+function addTaskto(task, target = "pendingTasks") {
+   const tasks = getLocalTasks(target);
+   tasks.push(task);
+   setLocalTasks(target, tasks);
+}
 function showTasks(filter = "all") {
    clearTasks();
    if (filter == "all") {
@@ -93,3 +99,11 @@ function updateTaskState(id, iscompleted) {
    showTasks();
 }
 
+//utilites
+function getLocalTasks(type) {
+   return JSON.parse(localStorage.getItem(type)) || [];
+}
+
+function setLocalTasks(target, value) {
+   localStorage.setItem(target, JSON.stringify(value) || []);
+}
