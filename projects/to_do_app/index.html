@@ -26,22 +26,27 @@
       <main>
          <div id="inputBox">
             <input type="text" id="taskInput" placeholder="type your task">
-            <button id="addButton">Add</button><br>
+            <button id="addButton" accesskey="Enter">Add</button><br>
             <script>
                const taskInput = document.getElementById('taskInput');
                const addButton = document.getElementById('addButton');
                addButton.addEventListener('click', () => {
                    const value = taskInput.value;
                   if(value){
-                     addTask(value); 
+                     addnewTask(value); 
                      taskInput.value = '';
                      showTasks(); 
                   }
                });
+               document.addEventListener('keyup', (event) => {
+               if (event.key === 'Enter') {
+                      addButton.click();
+                 }
+               });
             </script>
          </div>
-         <div class="tasks-section">
-            <div class="tasks-list">
+         <div id="tasks-section">
+            <div id="tasks-list">
                
             </div>
             <button onclick="removeTasks();">
