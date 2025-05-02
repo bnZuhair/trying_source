@@ -9,15 +9,21 @@
       <script src="main.js" onload="applyFontSize();">
       </script>
       <script>
-         window.addEventListener("load", (event) => {
-            showTasks();
+      function setFilter(filter){
+         localStorage.setItem("filter", filter)
+         document.getElementById(filter).checked = true;
+      }
+         window.addEventListener("load", () => {
+            const filter = getFilter();
+            setFilter(filter)
+            showTasks(filter);
          });
       </script>
    </head>
    <body>
       <header>
          <nav>
-            <ul>
+            <ul class="link">
                <li><a href="index.html">Home</a></li>
                <li><a href="settings.html">Settings</a></li>
                <li><a href="about.html">About</a></li>
@@ -44,6 +50,19 @@
                       addButton.click();
                  }
                });
+            </script>
+         </div>
+         <div id="filterTasks">
+            <input type="radio" id="all" name="filtring" value="all" ><label for="all">All</label>
+            <input type="radio" id="pending" name="filtring" value="pending"><label for="pending">Pending</label>
+            <input type="radio" id="comp" name="filtring" value="comp"><label for="comp">Completed</label>
+            <script>
+               const filterTasks = document.getElementById('filterTasks');
+               filterTasks.addEventListener('change', (e) => {
+                  const filter = e.target.value
+                  setFilter(filter);
+                  showTasks(filter);
+               })
             </script>
          </div>
          <div id="tasks-section">
