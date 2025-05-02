@@ -1,6 +1,12 @@
 .strikethrough {
    text-decoration: line-through;
 }
+body {
+   background: oklch(92.8% 0.006 264.531);
+}
+main {
+   margin: 0% 15%;
+}
 nav ul li {
   list-style: none;
   display: block;
