@@ -25,7 +25,7 @@ function addTaskto(task, target = "pendingTasks") {
    tasks.push(task);
    setLocalTasks(target, tasks);
 }
-function showTasks(filter = "all") {
+function showTasks(filter = getFilter()) {
    clearTasks();
    if (filter == "all") {
       showPendingTasks();
@@ -42,6 +42,8 @@ function printTasks(tasks, iscompleted = false) {
       const div = document.createElement("div");
       const item = document.createElement("input");
       const label = document.createElement("label");
+      const editButton = document.createElement("button");
+      const removeButton = document.createElement("button");
 
       div.setAttribute("class", "task");
 
@@ -56,8 +58,17 @@ function printTasks(tasks, iscompleted = false) {
          label.classList.add("strikethrough");
       }
 
+      editButton.innerHTML =
+         '<span class="material-symbols-outlined">edit</span>';
+
+      removeButton.innerHTML =
+         '<span class="material-symbols-outlined">delete</span>';
+      removeButton.setAttribute("onclick", `removeTaskById(${task.id})`);
+
       div.appendChild(item);
       div.appendChild(label);
+      div.appendChild(editButton);
+      div.appendChild(removeButton);
       list.appendChild(div);
    });
 }
@@ -77,6 +88,18 @@ function removeTasks() {
    localStorage.removeItem("pendingTasks");
    localStorage.removeItem("compTasks");
    clearTasks();
+}
+function removeTaskById(taskId) {
+   const taskCheckbox = document.getElementById(taskId);
+   const tasks = taskCheckbox.checked
+      ? getLocalTasks("compTasks")
+      : getLocalTasks("pendingTasks");
+
+   const taskIndex = tasks.findIndex((task) => task.id == taskId);
+   tasks.splice(taskIndex, 1);
+   setLocalTasks(taskCheckbox.checked ? "compTasks" : "pendingTasks", tasks);
+
+   showTasks();
 }
 document.addEventListener("DOMContentLoaded", () => {
    document.getElementById("tasks-list").addEventListener("change", (e) => {
@@ -106,4 +129,7 @@ function getLocalTasks(type) {
 
 function setLocalTasks(target, value) {
    localStorage.setItem(target, JSON.stringify(value) || []);
+}
+function getFilter() {
+   return localStorage.getItem("filter") || "all";
 }
