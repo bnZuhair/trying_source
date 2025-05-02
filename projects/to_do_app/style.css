@@ -1,3 +1,30 @@
 .strikethrough {
    text-decoration: line-through;
 }
+nav ul li {
+  list-style: none;
+  display: block;
+  flex-grow: 1;
+  text-align: center;
+  padding: 1.5% 2.5%;
+}
+nav ul li:hover {
+  background: oklch(48.8% 0.243 264.376);
+}
+header {
+  background: oklch(54.6% 0.245 262.881);
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+nav ul li a {
+  text-decoration: none;
+  display: block;
+  color: white;
+}
+
