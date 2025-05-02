@@ -1,11 +1,37 @@
 .strikethrough {
    text-decoration: line-through;
 }
+* {
+font-family: "DejaVu Sans Mono", monospace;
+}
 body {
    background: oklch(92.8% 0.006 264.531);
 }
 main {
    margin: 0% 15%;
+}
+#filterTasks {
+   display: flex;
+   gap: 1rem;
+}
+input[type="radio"] {
+  display: none;
+}
+input[type="radio"] + label {
+  color: oklch(50% 0.02 270);
+}
+
+input[type="radio"] + label:hover {
+  color: oklch(30% 0.04 270);
+}
+
+input[type="radio"]:checked + label {
+  color: oklch(20% 0.03 270);
+}
+
+
+hr {
+   margin-top: 0;
 }
 nav ul li {
   list-style: none;
