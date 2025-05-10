@@ -1,11 +1,11 @@
 .strikethrough {
    text-decoration: line-through;
 }
-* {
-font-family: "DejaVu Sans Mono", monospace;
-}
 body {
-   background: oklch(92.8% 0.006 264.531);
+   font-family: "DejaVu Sans Mono", monospace;
+   margin: 0;
+   padding: 0;
+   background: #efefef;
 }
 main {
    margin: 0% 15%;
