@@ -1,12 +1,22 @@
-const http = require("http");
-const fs = require("fs");
+const path = require("path");
+const express = require("express");
+const app = express();
+
 const PORT = 3000;
 const HOSTNAME = "127.0.0.1";
 
-const server = http.createServer(requestHandler(req, res));
+app.use(express.static(__dirname));
 
-server.listen(
-   PORT,
-   HOSTNAME,
-   () => console.log(`Server running at http://${HOSTNAME}:${PORT}/`),
-);
+app.get("/", function (req, res) {
+   res.sendFile(path.join(__dirname, "index.html"));
+});
+app.get("/settings", function (req, res) {
+   res.sendFile(path.join(__dirname, "settings.html"));
+});
+app.get("/settings", function (req, res) {
+   res.sendFile(path.join(__dirname, "about.html"));
+});
+
+app.listen(PORT, HOSTNAME, () => {
+   console.log(`Server listening at http://${HOSTNAME}:${PORT}`);
+});
