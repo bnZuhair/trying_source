@@ -112,10 +112,8 @@
 
          li {
             list-style: none;
-            display: block;
             flex-grow: 1;
             text-align: center;
-            padding: 1.5% 2.5%;
 
             &:hover {
                background: var(--blue-hover);
@@ -125,6 +123,7 @@
                text-decoration: none;
                display: block;
                color: var(--bg-white-light);
+               padding: 4% 2%;
             }
          }
       }
