@@ -64,13 +64,34 @@
 }
 @layer base{
    :root {
+      --clr-blue-500: oklch(54.6% 0.245 262.881);
+      --clr-blue-700: oklch(48.8% 0.243 264.376);
+      --clr-white-500: #efefef;
+      --clr-white-600: #DEEFE7;
+      --clr-white-900: #B4BEC9;
+      --clr-gray-300: oklch(50% 0.02 270);
+      --clr-gray-400: oklch(30% 0.04 270);
+      --clr-gray-600: oklch(10% 0.03 270);
+      --clr-red-400: #FF5656;
+      --clr-red-500: #F73F52;
+      --clr-red-800: #88304E;
 
+      --blue: var( --clr-blue-500 );
+      --blue-hover: var( --clr-blue-700 );
+
+      --red-light: var( --clr-red-400 );
+      --red-base: var( --clr-red-400 );
+      --red-dark: var( --clr-red-800 );
+
+      --gray-light: var( --clr-gray-300 );
+      --gray-base: var( --clr-gray-400 );
+      --gray-dark: var(--clr-gray-600);
+
+      --bg-white: var(--clr-white-500);
    }
    body {
       font-family: Courier;
-      margin: 0;
-      padding: 0;
-      background: #efefef;
+      background: var(--bg-white);
    }
    .wrapper {
      padding-inline: calc(1rem + (2vw));
@@ -82,6 +103,7 @@
       }
    }
 
+
    /* nav bar */
    nav ul li {
      list-style: none;
@@ -91,10 +113,10 @@
      padding: 1.5% 2.5%;
    }
    nav ul li:hover {
-     background: oklch(48.8% 0.243 264.376);
+     background: var(--blue-hover);
    }
    header {
-     background: oklch(54.6% 0.245 262.881);
+     background: var(--blue);
    }
 
    nav ul {
@@ -107,7 +129,7 @@
    nav ul li a {
      text-decoration: none;
      display: block;
-     color: white;
+     color: var(--bg-white);
    }
 
    /* the filter of the tasks */
@@ -119,15 +141,15 @@
      display: none;
    }
    input[type="radio"] + label {
-     color: oklch(50% 0.02 270);
+     color: var(--gray-light);
    }
 
    input[type="radio"] + label:hover {
-     color: oklch(30% 0.04 270);
+     color: var(--gray-base);
    }
 
    input[type="radio"]:checked + label {
-     color: oklch(20% 0.03 270);
+     color: var(--gray-dark);
    }
    hr {
       margin-top: 0;
@@ -136,5 +158,43 @@
    /* tasks */
    .strikethrough {
       text-decoration: line-through;
+   }
+}
+@layer utility {
+   .section {
+      margin-block: 1rem;
+
+      &[data-width="narrow"]{
+         margin-block: .5rem;
+      }
+   }
+    
+   .blue-button {
+      background: var(--blue);
+      color: var(--bg-white);
+      border-radius: 5px;
+      border: none;
+      display: inline-flex;
+      padding: 5px;
+      &:hover {
+         background: var(--blue-hover);
+      }
+   }
+   .red-button {
+      background: var(--red-light);
+      color: var(--bg-white);
+      border-radius: 5px;
+      border: none;
+      display: inline-flex;
+      padding: 5px;
+      &:hover {
+         background: var(--red-base);
+      }
+      &[shade="dark"]{
+         background: var(--red-base);
+         &:hover {
+            background: var(--red-dark);
+         }
+      }
    }
 }

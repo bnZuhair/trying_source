@@ -6,9 +6,8 @@ function setFontSize(fontSize) {
 function applyFontSize() {
    document.documentElement.setAttribute(
       "style",
-      `font-size:${
-         localStorage.getItem("fontSize") ||
-         setFontSize(20)
+      `font-size:${localStorage.getItem("fontSize") ||
+      setFontSize(20)
       }px`,
    );
 }
@@ -52,6 +51,9 @@ function printTasks(tasks, iscompleted = false) {
 
       label.textContent = task.content;
       label.setAttribute("for", task.id);
+
+      editButton.setAttribute("class", "blue-button")
+      removeButton.setAttribute("class", "red-button")
 
       if (iscompleted) {
          item.checked = true;

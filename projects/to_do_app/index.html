@@ -5,7 +5,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>tasks</title>
       <link href="style.css" rel="stylesheet">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0,0"/>
+      <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0,0"/> -->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,1,0" />
       <script src="main.js" onload="applyFontSize();">
       </script>
       <script>
@@ -33,7 +34,7 @@
       <main class="wrapper">
          <div class="section" id="inputBox">
             <input type="text" id="taskInput" placeholder="type your task" tabindex="1">
-            <button id="addButton" accesskey="Enter" tabindex="2">Add</button><br>
+            <button class="blue-button" id="addButton" accesskey="Enter" tabindex="2">Add</button><br>
             <script>
                const taskInput = document.getElementById('taskInput');
                const addButton = document.getElementById('addButton');
@@ -72,7 +73,7 @@
             <div class="section" data-width="narrow" id="tasks-list">
                
             </div>
-            <button onclick="removeTasks();">
+            <button class="red-button" shade="dark" onclick="removeTasks();">
                <span class="material-symbols-outlined">delete_forever</span>
             </button>
          </div>
