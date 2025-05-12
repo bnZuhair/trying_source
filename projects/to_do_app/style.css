@@ -72,8 +72,14 @@
       padding: 0;
       background: #efefef;
    }
-   main {
-      margin: 0% 15%;
+   .wrapper {
+     padding-inline: calc(1rem + (2vw));
+     max-width: 1400px;
+     margin-inline: auto;
+      @media (max-width: 768px){
+          padding-inline: 0.5; 
+          max-width: none;
+      }
    }
 
    /* nav bar */

@@ -30,8 +30,8 @@
             </ul>
          </nav>
       </header>
-      <main>
-         <div id="inputBox">
+      <main class="wrapper">
+         <div class="section" id="inputBox">
             <input type="text" id="taskInput" placeholder="type your task" tabindex="1">
             <button id="addButton" accesskey="Enter" tabindex="2">Add</button><br>
             <script>
@@ -52,22 +52,24 @@
                });
             </script>
          </div>
-         <div id="filterTasks">
-            <input type="radio" id="all" name="filtring" value="all" ><label for="all">All</label>
-            <input type="radio" id="pending" name="filtring" value="pending"><label for="pending">Pending</label>
-            <input type="radio" id="comp" name="filtring" value="comp"><label for="comp">Completed</label>
-            <script>
-               const filterTasks = document.getElementById('filterTasks');
-               filterTasks.addEventListener('change', (e) => {
-                  const filter = e.target.value
-                  setFilter(filter);
-                  showTasks(filter);
-               })
-            </script>
+         <div class='section'>
+            <div data-width="narrow" id="filterTasks">
+               <input type="radio" id="all" name="filtring" value="all" ><label for="all">All</label>
+               <input type="radio" id="pending" name="filtring" value="pending"><label for="pending">Pending</label>
+               <input type="radio" id="comp" name="filtring" value="comp"><label for="comp">Completed</label>
+               <script>
+                  const filterTasks = document.getElementById('filterTasks');
+                  filterTasks.addEventListener('change', (e) => {
+                     const filter = e.target.value
+                     setFilter(filter);
+                     showTasks(filter);
+                  })
+               </script>
+            </div>
+            <hr>
          </div>
-         <hr>
-         <div id="tasks-section">
-            <div id="tasks-list">
+         <div class="section" id="tasks-section">
+            <div class="section" data-width="narrow" id="tasks-list">
                
             </div>
             <button onclick="removeTasks();">
