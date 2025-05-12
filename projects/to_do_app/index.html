@@ -24,7 +24,7 @@
    <body>
       <header>
          <nav>
-            <ul class="link">
+            <ul>
                <li><a href="index.html">Home</a></li>
                <li><a href="settings.html">Settings</a></li>
                <li><a href="about.html">About</a></li>
@@ -53,8 +53,8 @@
                });
             </script>
          </div>
-         <div class='section'>
-            <div data-width="narrow" id="filterTasks">
+         <div class='section'data-width="narrow">
+            <div class='.equal-row-spacing' id="filterTasks">
                <input type="radio" id="all" name="filtring" value="all" ><label for="all">All</label>
                <input type="radio" id="pending" name="filtring" value="pending"><label for="pending">Pending</label>
                <input type="radio" id="comp" name="filtring" value="comp"><label for="comp">Completed</label>
@@ -70,7 +70,7 @@
             <hr>
          </div>
          <div class="section" id="tasks-section">
-            <div class="section" data-width="narrow" id="tasks-list">
+            <div class="section equal-colmun-spacing" data-width="narrow" id="tasks-list">
                
             </div>
             <button class="red-button" shade="dark" onclick="removeTasks();">
