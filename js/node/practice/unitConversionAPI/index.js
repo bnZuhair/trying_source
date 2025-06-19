@@ -88,7 +88,7 @@ app.get("/convert", (req, res) => {
    const { from, to, valueRaw } = req.query;
    const value = parseFloat(valueRaw);
 
-   if (!from || !to || !value) {
+   if (!from || !to || value === undefined) {
       return res.status(400).json({
          status: 400,
          message: "Missing query parameters. Required: from, to, value.",
@@ -100,16 +100,16 @@ app.get("/convert", (req, res) => {
          message: "Value must be a number.",
       });
    }
-   convertefun = conversionMap[from]?.[to];
-   if (convertefun) {
-      result = convertefun(value);
+   const converte_func = conversionMap[from]?.[to];
+   if (converte_func) {
+      const result = converte_func(value);
       res.status(200).json(
          {
             "status": 200,
             "result": {
                "from": from,
                "to": to,
-               "orignal_value": value,
+               "original_value": value,
                "converted_value": result,
             }
          }
