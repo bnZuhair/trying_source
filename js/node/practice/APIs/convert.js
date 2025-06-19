@@ -85,10 +85,10 @@ const conversionMap = {
 };
 
 app.get("/convert", (req, res) => {
-   const { from, to, valueRaw } = req.query;
+   const { from, to, value: valueRaw } = req.query;
    const value = parseFloat(valueRaw);
 
-   if (!from || !to || value === undefined) {
+   if (!from || !to || valueRaw === undefined) {
       return res.status(400).json({
          status: 400,
          message: "Missing query parameters. Required: from, to, value.",
