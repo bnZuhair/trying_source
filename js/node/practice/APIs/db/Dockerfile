@@ -2,7 +2,8 @@ From postgres:17-alpine3.21
 
 ENV POSTGRES_DB=booktraking \
     POSTGRES_USER=me \
-    POSTGRES_PASSWORD=mypass
+# I know this should be an env value
+    POSTGRES_PASSWORD=mypass 
 
 COPY ./data /data
 COPY ./init.sql /docker-entrypoint-initdb.d/
