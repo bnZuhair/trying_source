@@ -1,0 +1,72 @@
+## general
+### security
+- rate limiting for the server
+- logging and monitoring
+
+### perfomance
+- caching for the books that is mostly requiered
+
+### usablity 
+- versioning
+
+## users endpoints
+- post signup/ endpoint to create a new user 
+   - I might need to add rate limiting here to deal with the ppl that want to miss with the server
+- Post login/ check the user and let him in
+
+note: I'm not sure here if is it good to have the above two endpoints or it would be better to make them
+as users/
+
+// patch is better, avoid id when the user is me would be enough
+- patch users/<something that encrypt the user id> endpoint to change some user acount info
+   - I'm not sure here if we need a put mehtod
+      is there any possible usecase that needs a put use case
+
+- get users/<something that encrypt the user id> I guess to get the info of the user 
+   - like his reviews, and book ratings
+   // add paramiter controle
+
+
+- the next to are questionable but I think the make the most since give me ur ideas
+   - users can't review or rate multiple books at the same time
+
+
+- patch users/<id encrypted>/ratings/<id encrypted> to edit a rating
+- delete users/<id encrypted>/ratings/<id encrypted> to delete a rating
+
+- patch users/<id encrypted>/reviews/<id encrypted> to edit a reviews
+- delete users/<id encrypted>/ratings/<id encrypted> to delete a rating
+
+
+## books
+- post books/ create a new book (admin only)
+
+- patch books/<id encrypted> update a book partially (admin only)
+
+- put books/<id encrypted> update a book  entirally (admin only)
+
+- delete books/<id encrypted> delete a books (admin only)
+
+- get books/ get a list of books
+   - need to add pagination here
+   - need to add filtering here
+   - need to add sorting here
+ 
+- get books/<id encrypted> get a book info, reviews and rating
+   //carefull of the perfomance need to inclued paramters 
+
+- the next to are questionable but I think the make the most since give me ur ideas
+   - users can't review or rate multiple books at the same time
+   - I guess the data will be sent? or stored in the same session 
+
+- post books/<id encrypted>/ratings to add a rating???
+
+- post books/<id encrypted>/reviews to add a reviews???
+
+
+
+Note:
+- I guess I could have a seprate endpoints for both rating and reviews but I think
+it is good engough right now what are ur thoughts
+   - I think it depends dealing with the state, and authing
+
