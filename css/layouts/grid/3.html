@@ -1,0 +1,35 @@
+<style>
+   .grid {
+     background-color: #ddd;
+     padding: 20px;
+     width: 800px;
+     height: 400px;
+     display: grid;
+     gap: 15px;
+     grid-template-rows: 1fr auto;
+     grid-template-columns: auto 1fr 1fr auto;
+   }
+   .grid > * {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background: #403f3f;
+      color: white;
+   }
+   .grid > :nth-child(5),
+   .grid > :nth-child(8) {
+      place-self: center;
+    }
+</style>
+<body>
+   <div class="grid">
+     <div>1</div>
+     <div>2</div>
+     <div>3</div>
+     <div>4</div>
+     <div>5</div>
+     <div>6</div>
+     <div>7</div>
+     <div>8</div>
+   </div>
+</body>
