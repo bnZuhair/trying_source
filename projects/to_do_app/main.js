@@ -1,4 +1,4 @@
-import { getLocalTasks, setLocalTasks, getFilter } from "./utils.js";
+import { getLocalTasks, setLocalTasks, getFilter, setFilter } from "./utils.js";
 
 applyFontSize();
 setFilter();
@@ -26,10 +26,6 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-function setFilter(filter = "all") {
-  localStorage.setItem("filter", filter);
-  document.getElementById(filter).checked = true;
-}
 window.addEventListener("load", () => {
   const filter = getFilter();
   setFilter(filter);
