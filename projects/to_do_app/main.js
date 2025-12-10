@@ -116,7 +116,7 @@ function showPendingTasks() {
 }
 function showCompTasks() {
   const tasks = getLocalTasks("compTasks");
-  printTasks(tasks, (iscompleted = true));
+  printTasks(tasks, true);
 }
 function clearTasks() {
   const list = document.getElementById("tasks-list");
