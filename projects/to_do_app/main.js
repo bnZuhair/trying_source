@@ -94,23 +94,6 @@ function clearTasks() {
   const list = document.getElementById("tasks-list");
   list.replaceChildren();
 }
-function removeTasks() {
-  localStorage.removeItem("pendingTasks");
-  localStorage.removeItem("compTasks");
-  clearTasks();
-}
-function removeTaskById(taskId) {
-  const taskCheckbox = document.getElementById(taskId);
-  const tasks = taskCheckbox.checked
-    ? getLocalData("compTasks")
-    : getLocalData("pendingTasks");
-
-  const taskIndex = tasks.findIndex((task) => task.id == taskId);
-  tasks.splice(taskIndex, 1);
-  setLocalTasks(taskCheckbox.checked ? "compTasks" : "pendingTasks", tasks);
-
-  showTasks(filter);
-}
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("tasks-list").addEventListener("change", (e) => {
     const checkbox = e.target;
