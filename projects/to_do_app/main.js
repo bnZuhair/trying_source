@@ -119,7 +119,7 @@ function removeTaskById(taskId) {
   tasks.splice(taskIndex, 1);
   setLocalTasks(taskCheckbox.checked ? "compTasks" : "pendingTasks", tasks);
 
-  showTasks();
+  showTasks(filter);
 }
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("tasks-list").addEventListener("change", (e) => {
@@ -139,5 +139,5 @@ function updateTaskState(id, iscompleted) {
   addTaskto(tasks[taskIndex], iscompleted ? "compTasks" : "pendingTasks");
   tasks.splice(taskIndex, 1);
   setLocalTasks(iscompleted ? "pendingTasks" : "compTasks", tasks);
-  showTasks();
+  showTasks(filter);
 }
