@@ -1,4 +1,4 @@
-import { getLocalTasks, setLocalTasks } from "./utils.js";
+import { getLocalData, getLocalTasks, setLocalTasks } from "./utils.js";
 import { applyFontSize } from "./settings.js";
 
 let filter = "all";
@@ -43,14 +43,16 @@ function addTaskto(task, target = "pendingTasks") {
   setLocalTasks(target, tasks);
 }
 function showTasks(filter) {
+  const completed = getLocalData("compTasks");
+  const pending = getLocalData("pendingTasks");
   clearTasks();
   if (filter == "all") {
-    showPendingTasks();
-    showCompTasks();
+    printTasks(pending);
+    printTasks(completed, true);
   } else if (filter == "pending") {
-    showPendingTasks();
+    printTasks(pending);
   } else {
-    showCompTasks();
+    printTasks(completed, true);
   }
 }
 function printTasks(tasks, iscompleted = false) {
@@ -91,14 +93,6 @@ function printTasks(tasks, iscompleted = false) {
     div.appendChild(removeButton);
     list.appendChild(div);
   });
-}
-function showPendingTasks() {
-  const tasks = getLocalTasks("pendingTasks");
-  printTasks(tasks);
-}
-function showCompTasks() {
-  const tasks = getLocalTasks("compTasks");
-  printTasks(tasks, true);
 }
 function clearTasks() {
   const list = document.getElementById("tasks-list");
