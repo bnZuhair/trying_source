@@ -1,12 +1,16 @@
-import { getLocalTasks, setLocalTasks, getFilter, setFilter } from "./utils.js";
+import { getLocalData, setLocalTasks, getFilter } from "./utils.js";
 
 applyFontSize();
-setFilter();
+let filter = "all";
+
+window.addEventListener("load", () => {
+  applyFontSize();
+  showTasks(filter);
+});
 
 const filterTasks = document.getElementById("filterTasks");
 filterTasks.addEventListener("change", (e) => {
-  const filter = e.target.value;
-  setFilter(filter);
+  filter = e.target.value;
   showTasks(filter);
 });
 
@@ -26,11 +30,6 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-window.addEventListener("load", () => {
-  const filter = getFilter();
-  setFilter(filter);
-  showTasks(filter);
-});
 
 let taskId = parseInt(localStorage.getItem("taskId")) || 0;
 function setFontSize(fontSize) {
