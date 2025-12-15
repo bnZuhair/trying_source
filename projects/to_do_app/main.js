@@ -1,6 +1,10 @@
-import { getLocalData, setLocalTasks } from "./utils.js";
+import {
+  getLocalTasks,
+  setLocalTasks,
+  getLocalData,
+  setLocalData,
+} from "./utils.js";
 
-applyFontSize();
 let filter = "all";
 
 window.addEventListener("load", () => {
@@ -21,7 +25,7 @@ addButton.addEventListener("click", () => {
   if (value) {
     addnewTask(value);
     taskInput.value = "";
-    showTasks();
+    showTasks(filter);
   }
 });
 document.addEventListener("keyup", (event) => {
@@ -30,18 +34,14 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-let taskId = parseInt(localStorage.getItem("taskId")) || 0;
-function setFontSize(fontSize) {
-  localStorage.setItem("fontSize", fontSize);
-  applyFontSize();
-}
 function applyFontSize() {
-  document.documentElement.setAttribute(
-    "style",
-    `font-size:${localStorage.getItem("fontSize") || setFontSize(20)}px`,
-  );
+  document.body.style.fontSize = getLocalData("fontSize");
+}
+function setFontSize(fontSize) {
+  setLocalData("fontSize", fontSize);
 }
 
+let taskId = parseInt(localStorage.getItem("taskId")) || 0;
 function addnewTask(task, target = "pendingTasks") {
   const tasks = getLocalTasks(target);
   tasks.push({ id: taskId, content: task });
