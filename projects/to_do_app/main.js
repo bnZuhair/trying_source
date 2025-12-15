@@ -1,4 +1,9 @@
-import { getLocalData, setLocalData, setLocalTasks } from "./utils.js";
+import {
+  addToList,
+  getLocalTasks,
+  removeByContent,
+  setLocalData,
+} from "./utils.js";
 import { applyFontSize } from "./settings.js";
 
 let filter = "all";
@@ -18,7 +23,7 @@ const addButton = document.getElementById("addButton");
 addButton.addEventListener("click", () => {
   const content = taskInput.value;
   if (content.trim()) {
-    const tasks = getLocalData("pendingTasks") ?? [];
+    const tasks = getLocalTasks("pendingTasks");
     const tasks_copy = addTask(tasks, content);
     setLocalData("pendingTasks", tasks_copy);
     taskInput.value = "";
@@ -32,13 +37,11 @@ document.addEventListener("keyup", (event) => {
 });
 
 function addTask(tasks, content) {
-  let tasks_copy = [...tasks];
-  tasks_copy.unshift(content);
-  return tasks_copy;
+  return addToList(tasks, content);
 }
 function showTasks(filter) {
-  const completed = getLocalData("compTasks") ?? [];
-  const pending = getLocalData("pendingTasks") ?? [];
+  const completed = getLocalTasks("compTasks") ?? [];
+  const pending = getLocalTasks("pendingTasks") ?? [];
   clearTasks();
   if (filter == "all") {
     printTasks(pending);
@@ -99,20 +102,27 @@ function clearTasks() {
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("tasks-list").addEventListener("change", (e) => {
     const checkbox = e.target;
-    const label = checkbox.nextElementSibling;
-    checkbox.checked
-      ? label.classList.add("strikethrough")
-      : label.classList.remove("strikethrough");
-    updateTaskState(label.getAttribute("for"), checkbox.checked); // send the id of the task
+    const lable = checkbox.nextElementSibling;
+    const content = lable.textContent;
+    if (checkbox.checked) {
+      lable.classList.add("strikethrough");
+      let tasks = getLocalTasks("pendingTasks");
+      let tasks_copy = removeByContent(tasks, content);
+      setLocalData("pendingTasks", tasks_copy);
+
+      tasks = getLocalTasks("compTasks");
+      tasks_copy = addTask(tasks, content);
+      setLocalData("compTasks", tasks_copy);
+    } else {
+      lable.classList.remove("strikethrough");
+      let tasks = getLocalTasks("compTasks");
+      let tasks_copy = removeByContent(tasks, content);
+      setLocalData("compTasks", tasks_copy);
+
+      tasks = getLocalTasks("pendingTasks");
+      tasks_copy = addTask(tasks, content);
+      setLocalData("pendingTasks", tasks_copy);
+    }
+    showTasks(filter);
   });
 });
-function updateTaskState(id, iscompleted) {
-  const tasks = iscompleted
-    ? getLocalData("pendingTasks")
-    : getLocalData("compTasks");
-
-  addTask(tasks, tasks[id]);
-  tasks.splice(id, 1);
-  setLocalTasks(iscompleted ? "pendingTasks" : "compTasks", tasks);
-  showTasks(filter);
-}
