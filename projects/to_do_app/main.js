@@ -18,7 +18,8 @@ const addButton = document.getElementById("addButton");
 addButton.addEventListener("click", () => {
   const value = taskInput.value;
   if (value) {
-    addnewTask(value);
+    const tasks = getLocalTasks(target);
+    addnewTask(tasks, value);
     taskInput.value = "";
     showTasks(filter);
   }
@@ -30,16 +31,10 @@ document.addEventListener("keyup", (event) => {
 });
 
 let taskId = parseInt(localStorage.getItem("taskId")) || 0;
-function addnewTask(task, target = "pendingTasks") {
-  const tasks = getLocalTasks(target);
+function addnewTask(tasks, task, target = "pendingTasks") {
   tasks.push({ id: taskId, content: task });
   taskId++;
   localStorage.setItem("taskId", taskId);
-  setLocalTasks(target, tasks);
-}
-function addTaskto(task, target = "pendingTasks") {
-  const tasks = getLocalTasks(target);
-  tasks.push(task);
   setLocalTasks(target, tasks);
 }
 function showTasks(filter) {
@@ -130,7 +125,12 @@ function updateTaskState(id, iscompleted) {
     ? getLocalTasks("pendingTasks")
     : getLocalTasks("compTasks");
   const taskIndex = tasks.findIndex((task) => task.id == id);
-  addTaskto(tasks[taskIndex], iscompleted ? "compTasks" : "pendingTasks");
+
+  addnewTask(
+    tasks,
+    tasks[taskIndex],
+    iscompleted ? "compTasks" : "pendingTasks",
+  );
   tasks.splice(taskIndex, 1);
   setLocalTasks(iscompleted ? "pendingTasks" : "compTasks", tasks);
   showTasks(filter);
