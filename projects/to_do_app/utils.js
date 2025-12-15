@@ -6,11 +6,11 @@ export function setLocalTasks(target, value) {
   localStorage.setItem(target, JSON.stringify(value) || []);
 }
 
-export function getFilter() {
-  return localStorage.getItem("filter") || "all";
+export function getLocalData(target) {
+  const data = localStorage.getItem(target);
+  return JSON.parse(data);
 }
 
-export function setFilter(filter = "all") {
-  localStorage.setItem("filter", filter);
-  document.getElementById(filter).checked = true;
+export function setLocalData(target, value = null) {
+  localStorage.setItem(target, JSON.stringify(value));
 }

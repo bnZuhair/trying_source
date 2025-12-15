@@ -1,4 +1,4 @@
-import { getLocalData, setLocalTasks, getFilter } from "./utils.js";
+import { getLocalData, setLocalTasks } from "./utils.js";
 
 applyFontSize();
 let filter = "all";
@@ -30,7 +30,6 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-
 let taskId = parseInt(localStorage.getItem("taskId")) || 0;
 function setFontSize(fontSize) {
   localStorage.setItem("fontSize", fontSize);
@@ -55,7 +54,7 @@ function addTaskto(task, target = "pendingTasks") {
   tasks.push(task);
   setLocalTasks(target, tasks);
 }
-function showTasks(filter = getFilter()) {
+function showTasks(filter) {
   clearTasks();
   if (filter == "all") {
     showPendingTasks();
