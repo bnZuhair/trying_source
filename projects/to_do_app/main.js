@@ -1,7 +1,8 @@
-import { getLocalData, getLocalTasks, setLocalTasks } from "./utils.js";
+import { getLocalData, setLocalData, setLocalTasks } from "./utils.js";
 import { applyFontSize } from "./settings.js";
 
 let filter = "all";
+let taskId = parseInt(localStorage.getItem("taskId")) || 0;
 
 window.addEventListener("load", () => {
   showTasks(filter);
@@ -18,8 +19,10 @@ const addButton = document.getElementById("addButton");
 addButton.addEventListener("click", () => {
   const value = taskInput.value;
   if (value) {
-    const tasks = getLocalTasks(target);
-    addnewTask(tasks, value);
+    taskId++;
+    setLocalData("taskId", taskId);
+    const tasks = addTask(getLocalData("pendingTasks"), value, taskId);
+    setLocalData("pendingTasks", tasks);
     taskInput.value = "";
     showTasks(filter);
   }
@@ -30,12 +33,10 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-let taskId = parseInt(localStorage.getItem("taskId")) || 0;
-function addnewTask(tasks, task, target = "pendingTasks") {
-  tasks.push({ id: taskId, content: task });
-  taskId++;
-  localStorage.setItem("taskId", taskId);
-  setLocalTasks(target, tasks);
+function addTask(tasks, content, taskId) {
+  let tasks_copy = [...tasks];
+  tasks_copy.push({ id: taskId, content: content });
+  return tasks_copy;
 }
 function showTasks(filter) {
   const completed = getLocalData("compTasks");
@@ -101,8 +102,8 @@ function removeTasks() {
 function removeTaskById(taskId) {
   const taskCheckbox = document.getElementById(taskId);
   const tasks = taskCheckbox.checked
-    ? getLocalTasks("compTasks")
-    : getLocalTasks("pendingTasks");
+    ? getLocalData("compTasks")
+    : getLocalData("pendingTasks");
 
   const taskIndex = tasks.findIndex((task) => task.id == taskId);
   tasks.splice(taskIndex, 1);
@@ -122,15 +123,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 function updateTaskState(id, iscompleted) {
   const tasks = iscompleted
-    ? getLocalTasks("pendingTasks")
-    : getLocalTasks("compTasks");
+    ? getLocalData("pendingTasks")
+    : getLocalData("compTasks");
   const taskIndex = tasks.findIndex((task) => task.id == id);
 
-  addnewTask(
-    tasks,
-    tasks[taskIndex],
-    iscompleted ? "compTasks" : "pendingTasks",
-  );
+  addTask(tasks, tasks[taskIndex], iscompleted ? "compTasks" : "pendingTasks");
   tasks.splice(taskIndex, 1);
   setLocalTasks(iscompleted ? "pendingTasks" : "compTasks", tasks);
   showTasks(filter);
