@@ -1,14 +1,9 @@
-import {
-  getLocalTasks,
-  setLocalTasks,
-  getLocalData,
-  setLocalData,
-} from "./utils.js";
+import { getLocalTasks, setLocalTasks } from "./utils.js";
+import { applyFontSize } from "./settings.js";
 
 let filter = "all";
 
 window.addEventListener("load", () => {
-  applyFontSize();
   showTasks(filter);
 });
 
@@ -33,13 +28,6 @@ document.addEventListener("keyup", (event) => {
     addButton.click();
   }
 });
-
-function applyFontSize() {
-  document.body.style.fontSize = getLocalData("fontSize");
-}
-function setFontSize(fontSize) {
-  setLocalData("fontSize", fontSize);
-}
 
 let taskId = parseInt(localStorage.getItem("taskId")) || 0;
 function addnewTask(task, target = "pendingTasks") {
