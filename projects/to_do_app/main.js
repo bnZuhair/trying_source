@@ -2,7 +2,6 @@ import { getLocalData, setLocalData, setLocalTasks } from "./utils.js";
 import { applyFontSize } from "./settings.js";
 
 let filter = "all";
-let taskId = parseInt(localStorage.getItem("taskId")) || 0;
 
 window.addEventListener("load", () => {
   showTasks(filter);
@@ -17,12 +16,11 @@ filterTasks.addEventListener("change", (e) => {
 const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 addButton.addEventListener("click", () => {
-    taskId++;
-    setLocalData("taskId", taskId);
   const content = taskInput.value;
   if (content.trim()) {
-    const tasks = addTask(getLocalData("pendingTasks"), content);
-    setLocalData("pendingTasks", tasks);
+    const tasks = getLocalData("pendingTasks") ?? [];
+    const tasks_copy = addTask(tasks, content);
+    setLocalData("pendingTasks", tasks_copy);
     taskInput.value = "";
     showTasks(filter);
   }
@@ -33,14 +31,14 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-function addTask(tasks, content, taskId) {
+function addTask(tasks, content) {
   let tasks_copy = [...tasks];
-  tasks_copy.push({ id: taskId, content: content });
+  tasks_copy.unshift(content);
   return tasks_copy;
 }
 function showTasks(filter) {
-  const completed = getLocalData("compTasks");
-  const pending = getLocalData("pendingTasks");
+  const completed = getLocalData("compTasks") ?? [];
+  const pending = getLocalData("pendingTasks") ?? [];
   clearTasks();
   if (filter == "all") {
     printTasks(pending);
@@ -52,7 +50,8 @@ function showTasks(filter) {
   }
 }
 function printTasks(tasks, iscompleted = false) {
-  tasks.reverse().map((task) => {
+  let counter = 0;
+  tasks.map((task) => {
     const list = document.getElementById("tasks-list");
     const div = document.createElement("div");
     const item = document.createElement("input");
@@ -63,10 +62,10 @@ function printTasks(tasks, iscompleted = false) {
     div.setAttribute("class", "task");
 
     item.setAttribute("type", "checkbox");
-    item.setAttribute("id", task.id);
+    item.setAttribute("id", counter);
 
-    label.textContent = task.content;
-    label.setAttribute("for", task.id);
+    label.textContent = task;
+    label.setAttribute("for", counter);
 
     editButton.setAttribute("class", "blue-button");
     removeButton.setAttribute("class", "red-button");
@@ -81,19 +80,22 @@ function printTasks(tasks, iscompleted = false) {
 
     removeButton.innerHTML =
       '<span class="material-symbols-outlined">delete</span>';
-    removeButton.setAttribute("onclick", `removeTaskById(${task.id})`);
 
     div.appendChild(item);
     div.appendChild(label);
     div.appendChild(editButton);
     div.appendChild(removeButton);
     list.appendChild(div);
+
+    counter++;
   });
 }
 function clearTasks() {
   const list = document.getElementById("tasks-list");
   list.replaceChildren();
 }
+
+// TODO: deal with task removing, editing and completion(updating)
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("tasks-list").addEventListener("change", (e) => {
     const checkbox = e.target;
@@ -108,10 +110,9 @@ function updateTaskState(id, iscompleted) {
   const tasks = iscompleted
     ? getLocalData("pendingTasks")
     : getLocalData("compTasks");
-  const taskIndex = tasks.findIndex((task) => task.id == id);
 
-  addTask(tasks, tasks[taskIndex], iscompleted ? "compTasks" : "pendingTasks");
-  tasks.splice(taskIndex, 1);
+  addTask(tasks, tasks[id]);
+  tasks.splice(id, 1);
   setLocalTasks(iscompleted ? "pendingTasks" : "compTasks", tasks);
   showTasks(filter);
 }
