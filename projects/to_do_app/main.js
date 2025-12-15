@@ -17,11 +17,11 @@ filterTasks.addEventListener("change", (e) => {
 const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 addButton.addEventListener("click", () => {
-  const value = taskInput.value;
-  if (value) {
     taskId++;
     setLocalData("taskId", taskId);
-    const tasks = addTask(getLocalData("pendingTasks"), value, taskId);
+  const content = taskInput.value;
+  if (content.trim()) {
+    const tasks = addTask(getLocalData("pendingTasks"), content);
     setLocalData("pendingTasks", tasks);
     taskInput.value = "";
     showTasks(filter);
