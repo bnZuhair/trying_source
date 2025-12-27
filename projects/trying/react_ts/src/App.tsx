@@ -1,24 +1,25 @@
+import { useState } from "react";
 export default function App() {
    return (
       <div className="flex justify-center items-center h-screen">
-
-         <Clock min={"00"} sec={"10"} />
-
+         <Clock min={0} sec={10} />
       </div>
    );
 }
 
 interface ClockProps {
-   min: string;
-   sec: string;
+   min: number;
+   sec: number;
 }
 
-function Clock({ min = "00", sec = "00" }: ClockProps) {
+function Clock({ min = 0, sec = 0 }: ClockProps) {
+   const [num, setNum] = useState(0);
    return (
-      <div className="flex-col">
+      <div className="flex flex-col">
          <div>
-            <Conter key='1' value={min} />
-            <Conter key='0' value={sec} />
+            <Conter key='0' value={min} />
+            <span className="text-red-400 orbitron text-9xl">:</span>
+            <Conter key='1' value={sec} />
          </div>
          <div className="flex justify-around">
             <Button text="stop" />
@@ -33,15 +34,24 @@ interface ButtonProps {
 }
 function Button({ text, handler = () => { } }: ButtonProps) {
    return (
-      <button className="text-green-200" onClick={handler}>{text}</button>
+      <button className="text-gray-500 bg-white rounded-md" onClick={handler}>{text}</button>
    );
 }
 
-function Conter({ value }: { value: string }) {
+function Conter({ value }: { value: number }) {
+
+   const [num, setNum] = useState(value)
+
+   function changeHanler() {
+      // deal with the event in the right way
+      // setNum(e.target.value)
+   }
+   const noButtonDefaults = "focus:outline-0 box-border appearance-none [&::-webkit-inner-spin-button,&::-webkit-outer-spin-button]:appearance-none";
 
    return (
-      <input
-         className="text-red-400 orbitron text-xl"
-         value={value} />
+      <input type="number" min={0} max={59}
+         className={`text-red-400 orbitron text-9xl w-[2ch] ${noButtonDefaults}`}
+         value={num.toString().padStart(2, '0')}
+         onChange={changeHanler} />
    );
 }
