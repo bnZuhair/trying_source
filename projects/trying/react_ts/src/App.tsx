@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 export default function App() {
    return (
       <div className="flex justify-center items-center h-screen">
@@ -13,16 +13,15 @@ interface ClockProps {
 }
 
 function Clock({ min = 0, sec = 0 }: ClockProps) {
-   const [num, setNum] = useState(0);
    return (
       <div className="flex flex-col">
          <div>
-            <Conter key='0' value={min} />
+            <Counter key='0' value={min} />
             <span className="text-red-400 orbitron text-9xl">:</span>
-            <Conter key='1' value={sec} />
+            <Counter key='1' value={sec} />
          </div>
          <div className="flex justify-around">
-            <Button text="stop" />
+            <Button text="rest" />
             <Button text="start" />
          </div>
       </div>
@@ -38,13 +37,19 @@ function Button({ text, handler = () => { } }: ButtonProps) {
    );
 }
 
-function Conter({ value }: { value: number }) {
+function Counter({ value }: { value: number }) {
 
-   const [num, setNum] = useState(value)
+   const [num, setNum] = useState(value);
 
-   function changeHanler() {
-      // deal with the event in the right way
-      // setNum(e.target.value)
+   function changeHandler(e: ChangeEvent<HTMLInputElement>) {
+      const rawValue = e.target.value;
+      let value = parseInt(rawValue);
+      if (value > 59) {
+         value = 59;
+      } else if (value < 0) {
+         value = 0;
+      }
+      setNum(value);
    }
    const noButtonDefaults = "focus:outline-0 box-border appearance-none [&::-webkit-inner-spin-button,&::-webkit-outer-spin-button]:appearance-none";
 
@@ -52,6 +57,6 @@ function Conter({ value }: { value: number }) {
       <input type="number" min={0} max={59}
          className={`text-red-400 orbitron text-9xl w-[2ch] ${noButtonDefaults}`}
          value={num.toString().padStart(2, '0')}
-         onChange={changeHanler} />
+         onChange={changeHandler} />
    );
 }
