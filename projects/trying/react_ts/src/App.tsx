@@ -15,9 +15,9 @@ interface ClockProps {
 function Clock({ min = 0, sec = 0 }: ClockProps) {
    return (
       <div className="flex flex-col">
-         <div>
+         <div className="text-red-400 orbitron">
             <Counter key='0' value={min} />
-            <span className="text-red-400 orbitron text-9xl">:</span>
+            <span className="text-9xl">:</span>
             <Counter key='1' value={sec} />
          </div>
          <div className="flex justify-around">
@@ -55,7 +55,7 @@ function Counter({ value }: { value: number }) {
 
    return (
       <input type="number" min={0} max={59}
-         className={`text-red-400 orbitron text-9xl w-[2ch] ${noButtonDefaults}`}
+         className={`text-9xl w-[2ch] ${noButtonDefaults}`}
          value={num.toString().padStart(2, '0')}
          onChange={changeHandler} />
    );
