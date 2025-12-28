@@ -2,17 +2,15 @@ import { useState, type ChangeEvent } from "react";
 export default function App() {
    return (
       <div className="flex justify-center items-center h-screen">
-         <Clock min={0} sec={10} />
+         <Clock />
       </div>
    );
 }
 
-interface ClockProps {
-   min: number;
-   sec: number;
-}
 
-function Clock({ min = 0, sec = 0 }: ClockProps) {
+function Clock() {
+   const [min, setMin] = useState(0);
+   const [sec, setSec] = useState(0);
    return (
       <div className="flex flex-col">
          <div className="text-red-400 orbitron">
