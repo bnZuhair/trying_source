@@ -8,22 +8,40 @@ export default function App() {
 }
 
 
-// const delay = (time: number) => { return new Promise(resolve => { setTimeout(resolve, time) }) };
-//       await delay(1000);
 function Clock() {
    const [min, setMin] = useState(0);
    const [sec, setSec] = useState(0);
+   const [isActive, setIsActive] = useState(false);
+   let timer: number;
 
-   async function startTimer() {
-      //maybe
-      while (sec > 0) {
-         await new Promise(resolve => { setTimeout(resolve, 1000) });
-         setSec(sec => sec - 1);
+   function startTimer() {
+      if (!isActive && (sec || min)) {
+         timer = setInterval(updateTime, 1000);
+         setIsActive(true);
       }
+   }
+   function updateTime() {
+      if (sec || min) {
+         if (sec) {
+            setSec(sec => sec - 1);
+         }
+         else {
+            setSec(59);
+            setMin(min => min - 1);
+         }
+      } else {
+         stopTimer();
+      }
+   }
+   function stopTimer() {
+      clearInterval(timer);
+      setIsActive(false);
    }
    function restHandler() {
       setMin(0);
       setSec(0);
+      if (isActive)
+         stopTimer();
    }
    return (
       <div className="flex flex-col">
@@ -34,7 +52,7 @@ function Clock() {
          </div>
          <div className="flex justify-around">
             <Button key='0' text="rest" handler={restHandler} />
-            <Button key='1' text="start" handler={startTimer} />
+            <Button key='1' text={isActive ? "pause" : "start"} handler={isActive ? stopTimer : startTimer} />
          </div>
       </div>
    );
