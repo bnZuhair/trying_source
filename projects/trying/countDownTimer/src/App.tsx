@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useRef, useState, type ChangeEvent } from "react";
 export default function App() {
    return (
       <div className="flex justify-center items-center h-screen">
@@ -9,46 +9,49 @@ export default function App() {
 
 
 function Clock() {
-   const [min, setMin] = useState(0);
-   const [sec, setSec] = useState(0);
+   const [time, setTime] = useState({ min: 0, sec: 0 });
    const [isActive, setIsActive] = useState(false);
-   let timer: number;
+   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
    function startTimer() {
-      if (!isActive && (sec || min)) {
-         timer = setInterval(updateTime, 1000);
+      if (!isActive && (time.sec || time.min)) {
+         timer.current = setInterval(updateTime, 1000);
          setIsActive(true);
       }
    }
    function updateTime() {
-      if (sec || min) {
-         if (sec) {
-            setSec(sec => sec - 1);
-         }
+      setTime((time) => {
+         if (time.sec > 0)
+            return { ...time, sec: time.sec - 1 };
+         else if (time.min > 0)
+            return { min: time.min - 1, sec: 59 };
          else {
-            setSec(59);
-            setMin(min => min - 1);
+            stopTimer();
+            return { ...time };
          }
-      } else {
-         stopTimer();
-      }
+      })
    }
    function stopTimer() {
-      clearInterval(timer);
+      clearInterval(timer.current);
       setIsActive(false);
    }
    function restHandler() {
-      setMin(0);
-      setSec(0);
+      setTime({ min: 0, sec: 0 })
       if (isActive)
          stopTimer();
+   }
+   function setSec(num: number) {
+      setTime(prev => ({ ...prev, sec: num }));
+   }
+   function setMin(num: number) {
+      setTime(prev => ({ ...prev, min: num }));
    }
    return (
       <div className="flex flex-col">
          <div className="text-red-400 orbitron">
-            <Counter key='0' value={min} onChange={setMin} />
+            <Counter key='0' value={time.min} onChange={setMin} />
             <span className="text-9xl">:</span>
-            <Counter key='1' value={sec} onChange={setSec} />
+            <Counter key='1' value={time.sec} onChange={setSec} />
          </div>
          <div className="flex justify-around">
             <Button key='0' text="rest" handler={restHandler} />
