@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
+
 export default function Clock() {
    const [time, setTime] = useState({ min: 0, sec: 0 });
    const [isActive, setIsActive] = useState(false);
    const timer = useRef<number | null>(null);
 
+   function stopTimer() {
+      if (timer.current !== null) {
+         clearInterval(timer.current);
+         timer.current = null;
+         setIsActive(false);
+      }
+   }
+
    useEffect(() => {
       return () => stopTimer();
-   }
-      , []);
+   }, []);
 
    function startTimer() {
       if (!isActive && (time.sec || time.min)) {
@@ -15,6 +23,7 @@ export default function Clock() {
          setIsActive(true);
       }
    }
+
    function updateTime() {
       setTime((time) => {
          if (time.sec > 1)
@@ -25,31 +34,28 @@ export default function Clock() {
             stopTimer();
             return { ...time, sec: time.sec - 1 };
          }
-      })
+      });
    }
-   function stopTimer() {
-      if (timer.current !== null) {
-         clearInterval(timer.current);
-         timer.current = null;
-         setIsActive(false);
-      }
-   }
+
    function resetHandler() {
-      setTime({ min: 0, sec: 0 })
+      setTime({ min: 0, sec: 0 });
       if (isActive)
          stopTimer();
    }
+
    function setSec(num: number) {
       setTime(prev => ({ ...prev, sec: num }));
    }
+
    function setMin(num: number) {
       setTime(prev => ({ ...prev, min: num }));
    }
+
    return (
-      <div className="flex flex-col">
-         <div className="text-red-400 orbitron">
+      <div className="flex flex-col bg-black p-8 rounded-lg border-2 border-green-500">
+         <div className="text-green-400 orbitron">
             <Counter key='0' value={time.min} onChange={setMin} />
-            <span className="text-9xl">:</span>
+            <span className="text-9xl ">:</span>
             <Counter key='1' value={time.sec} onChange={setSec} />
          </div>
          <div className="flex justify-around">
@@ -59,13 +65,15 @@ export default function Clock() {
       </div>
    );
 }
+
 interface ButtonProps {
-   text: string,
-   handler: () => void
+   text: string;
+   handler: () => void;
 }
+
 function Button({ text, handler = () => { } }: ButtonProps) {
    return (
-      <button className="text-gray-500 bg-white p-0.5 rounded-md text-2xl" onClick={handler}>{text}</button>
+      <button className="text-green-400 bg-gray-800 hover:text-shadow-[0_0_10px_#00ff00] hover:shadow-[0_0_10px_#00ff00] rounded-md border border-green-500 p-1 text-2xl" onClick={handler}>{text}</button>
    );
 }
 
@@ -81,6 +89,7 @@ function Counter({ value, onChange }: { value: number, onChange: (numb: number) 
       }
       onChange(value);
    }
+
    const noInputDefaults = "focus:outline-0 box-border appearance-none [&::-webkit-inner-spin-button,&::-webkit-outer-spin-button]:appearance-none";
 
    return (
