@@ -17,13 +17,13 @@ export default function Clock() {
    }
    function updateTime() {
       setTime((time) => {
-         if (time.sec > 0)
+         if (time.sec > 1)
             return { ...time, sec: time.sec - 1 };
          else if (time.min > 0)
             return { min: time.min - 1, sec: 59 };
          else {
             stopTimer();
-            return { ...time };
+            return { ...time, sec: time.sec - 1 };
          }
       })
    }
@@ -65,7 +65,7 @@ interface ButtonProps {
 }
 function Button({ text, handler = () => { } }: ButtonProps) {
    return (
-      <button className="text-gray-500 bg-white rounded-md" onClick={handler}>{text}</button>
+      <button className="text-gray-500 bg-white p-0.5 rounded-md text-2xl" onClick={handler}>{text}</button>
    );
 }
 
