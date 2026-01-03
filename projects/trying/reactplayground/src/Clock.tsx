@@ -1,8 +1,13 @@
-import { useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 export default function Clock() {
    const [time, setTime] = useState({ min: 0, sec: 0 });
    const [isActive, setIsActive] = useState(false);
    const timer = useRef<number | null>(null);
+
+   useEffect(() => {
+      return () => stopTimer();
+   }
+      , []);
 
    function startTimer() {
       if (!isActive && (time.sec || time.min)) {
