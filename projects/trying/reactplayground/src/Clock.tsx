@@ -29,7 +29,7 @@ export default function Clock() {
          setIsActive(false);
       }
    }
-   function restHandler() {
+   function resetHandler() {
       setTime({ min: 0, sec: 0 })
       if (isActive)
          stopTimer();
@@ -48,7 +48,7 @@ export default function Clock() {
             <Counter key='1' value={time.sec} onChange={setSec} />
          </div>
          <div className="flex justify-around">
-            <Button key='0' text="rest" handler={restHandler} />
+            <Button key='0' text="reset" handler={resetHandler} />
             <Button key='1' text={isActive ? "pause" : "start"} handler={isActive ? stopTimer : startTimer} />
          </div>
       </div>
