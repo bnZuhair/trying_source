@@ -54,13 +54,13 @@ export default function Clock() {
    return (
       <div className="flex flex-col bg-black p-8 rounded-lg border-2 border-green-500">
          <div className="text-green-400 orbitron">
-            <Counter key='0' value={time.min} onChange={setMin} />
+            <Counter value={time.min} onChange={setMin} />
             <span className="text-9xl ">:</span>
-            <Counter key='1' value={time.sec} onChange={setSec} />
+            <Counter value={time.sec} onChange={setSec} />
          </div>
          <div className="flex justify-around">
-            <Button key='0' text="reset" handler={resetHandler} />
-            <Button key='1' text={isActive ? "pause" : "start"} handler={isActive ? stopTimer : startTimer} />
+            <Button text="reset" handler={resetHandler} />
+            <Button text={isActive ? "pause" : "start"} handler={isActive ? stopTimer : startTimer} />
          </div>
       </div>
    );
